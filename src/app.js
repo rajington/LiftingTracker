@@ -10,27 +10,18 @@ var UI = require('ui');
 var exercises = [];
 for (var i=0; i < 10; i++) {
   var name = 'Exercise '+i;
+  var starting = 100;
   exercises.push({
     name: name,
-    starting: 100,
-    reps: 3,
-    increase: 5
+    reps: [starting, starting+5, starting+10]
   });
-}
-
-function weightsString(exercise){
-  var weights = [];
-  for (var i=0; i<exercise.reps; i++){
-    weights.push(exercise.starting+i*exercise.increase);
-  }
-  return weights.join(', ');
 }
 
 // menu item for each exercise
 var items = exercises.map(function(exercise){
   return {
     title: exercise.name,
-    subtitle: weightsString(exercise)
+    subtitle: exercise.reps.join()
   };
 });
 
@@ -44,7 +35,7 @@ main.on('select', function(e) {
   var exercise = exercises[e.itemIndex];
   var card = new UI.Card();
   card.title(exercise.name);
-  card.subtitle(weightsString(exercise));
+  card.subtitle(exercise.reps.join());
   card.show();
 });
 
